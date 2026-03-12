@@ -67,6 +67,19 @@ function Navbar() {
 }
 
 function HeroSection() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <section className="relative h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -85,7 +98,7 @@ function HeroSection() {
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mt-20 flex flex-col lg:flex-row lg:items-end justify-between gap-12">
         <div className="max-w-3xl text-left">
           <motion.span 
-            initial={{ opacity: 0, y: 20 }}
+            initial={isMobile ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="block text-stone-200 text-sm font-medium tracking-[0.2em] uppercase mb-6 drop-shadow-md"
@@ -93,7 +106,7 @@ function HeroSection() {
             Crafting Legacies Since 1998
           </motion.span>
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={isMobile ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-5xl md:text-7xl lg:text-8xl text-stone-50 font-serif leading-none mb-8 lg:mb-0 drop-shadow-xl"
@@ -103,7 +116,7 @@ function HeroSection() {
         </div>
 
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={isMobile ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="bg-stone-900/40 backdrop-blur-md border border-stone-50/20 p-8 rounded-3xl max-w-md shadow-2xl"
