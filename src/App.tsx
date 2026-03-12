@@ -31,7 +31,7 @@ function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/homes" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Our Homes</Link>
             <Link to="/neighborhoods" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Neighborhoods</Link>
-            <a href="/#about" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>About Us</a>
+            <Link to="/about" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>About Us</Link>
             <Link to="/reviews" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Reviews</Link>
             <Link to="/schedule" className={`${navDark ? 'bg-stone-900 text-stone-50 hover:bg-earth-600' : 'bg-stone-50 text-stone-900 hover:bg-stone-200'} px-5 py-2.5 rounded-full text-sm font-medium transition-colors inline-block`}>
               Schedule a Tour
@@ -52,7 +52,7 @@ function Navbar() {
           <div className="px-4 pt-2 pb-6 space-y-1">
             <Link to="/homes" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Our Homes</Link>
             <Link to="/neighborhoods" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Neighborhoods</Link>
-            <a href="/#about" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">About Us</a>
+            <Link to="/about" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">About Us</Link>
             <Link to="/reviews" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Reviews</Link>
             <div className="pt-4">
               <Link to="/schedule" onClick={() => setIsOpen(false)} className="w-full flex justify-center bg-stone-900 text-stone-50 px-5 py-3 rounded-full text-sm font-medium hover:bg-earth-600 transition-colors">
@@ -914,9 +914,56 @@ function NeighborhoodsPage() {
 }
 
 function ScheduleTourPage() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    community: '',
+    date: '',
+    timeframe: '',
+    notes: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/schedule', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      setSubmitStatus('success');
+      setFormData({
+        firstName: '', lastName: '', email: '', phone: '', community: '', date: '', timeframe: '', notes: ''
+      });
+    } catch (error) {
+      console.error(error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main className="flex-grow pt-32 pb-24 bg-stone-50">
@@ -962,66 +1009,237 @@ function ScheduleTourPage() {
             className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-stone-100"
           >
             <h2 className="text-2xl font-serif text-stone-900 mb-6">Request a Tour</h2>
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">First Name</label>
-                  <input type="text" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Jane" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Last Name</label>
-                  <input type="text" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Doe" />
-                </div>
+            
+            {submitStatus === 'success' ? (
+              <div className="bg-earth-50 border border-earth-200 text-earth-800 rounded-xl p-6 text-center">
+                <CheckCircle className="w-12 h-12 text-earth-600 mx-auto mb-4" />
+                <h3 className="text-xl font-medium mb-2">Request Received!</h3>
+                <p>Thank you for reaching out. One of our community specialists will contact you shortly to confirm your tour.</p>
+                <button 
+                  onClick={() => setSubmitStatus('idle')}
+                  className="mt-6 text-earth-600 font-medium hover:text-earth-700 underline"
+                >
+                  Submit another request
+                </button>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Email Address</label>
-                  <input type="email" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="jane@example.com" />
+            ) : (
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                {submitStatus === 'error' && (
+                  <div className="bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 text-sm">
+                    There was an error submitting your request. Please try again later or contact us directly.
+                  </div>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">First Name</label>
+                    <input required type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Jane" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">Last Name</label>
+                    <input required type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Doe" />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Phone Number</label>
-                  <input type="tel" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="(555) 123-4567" />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">Email Address</label>
+                    <input required type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="jane@example.com" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">Phone Number</label>
+                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="(555) 123-4567" />
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">Community of Interest</label>
-                <select className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700">
-                  <option value="">Select a community...</option>
-                  <option value="whispering-pines">Whispering Pines</option>
-                  <option value="reserve">The Reserve at Oak Creek</option>
-                  <option value="highland">Highland Estates</option>
-                  <option value="undecided">I'm not sure yet</option>
-                </select>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Preferred Date</label>
-                  <input type="date" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Preferred Time</label>
-                  <select className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700">
-                    <option value="">Select a time...</option>
-                    <option value="morning">Morning (9AM - 12PM)</option>
-                    <option value="afternoon">Afternoon (12PM - 4PM)</option>
-                    <option value="evening">Evening (4PM - 6PM)</option>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">Community of Interest</label>
+                  <select name="community" value={formData.community} onChange={handleChange} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700">
+                    <option value="">Select a community...</option>
+                    <option value="whispering-pines">Whispering Pines</option>
+                    <option value="reserve">The Reserve at Oak Creek</option>
+                    <option value="highland">Highland Estates</option>
+                    <option value="undecided">I'm not sure yet</option>
                   </select>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-2">Additional Notes or Questions</label>
-                <textarea rows={4} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Tell us what you're looking for..."></textarea>
-              </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">Preferred Date</label>
+                    <input type="date" name="date" value={formData.date} onChange={handleChange} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">Preferred Time</label>
+                    <select name="timeframe" value={formData.timeframe} onChange={handleChange} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700">
+                      <option value="">Select a time...</option>
+                      <option value="morning">Morning (9AM - 12PM)</option>
+                      <option value="afternoon">Afternoon (12PM - 4PM)</option>
+                      <option value="evening">Evening (4PM - 6PM)</option>
+                    </select>
+                  </div>
+                </div>
 
-              <button className="w-full bg-stone-900 text-stone-50 py-4 rounded-xl font-medium hover:bg-earth-600 transition-colors text-lg">
-                Confirm Request
-              </button>
-            </form>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">Additional Notes or Questions</label>
+                  <textarea name="notes" value={formData.notes} onChange={handleChange} rows={4} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Tell us what you're looking for..."></textarea>
+                </div>
+
+                <button disabled={isSubmitting} className="w-full bg-stone-900 text-stone-50 py-4 rounded-xl font-medium hover:bg-earth-600 transition-colors text-lg disabled:opacity-70 disabled:cursor-not-allowed">
+                  {isSubmitting ? 'Sending...' : 'Confirm Request'}
+                </button>
+              </form>
+            )}
           </motion.div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function AboutPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <main className="flex-grow pt-20">
+      <div className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80&fm=webp" 
+            alt="Beautiful home interior" 
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-stone-900/40"></div>
+        </div>
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-5xl md:text-7xl font-serif text-stone-50 mb-6 drop-shadow-lg"
+          >
+            Our Story
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-stone-200 font-light max-w-2xl mx-auto"
+          >
+            Crafting legacies and building communities since 1998.
+          </motion.p>
+        </div>
+      </div>
+
+      <div className="py-24 bg-stone-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-4xl font-serif text-stone-900 mb-6">A Foundation Built on Trust</h2>
+              <p className="text-lg text-stone-600 mb-6 leading-relaxed">
+                Oak & Iron Homes began with a simple vision: to build houses that aren't just structures, but true homes where memories are made and generations thrive. Founded in 1998 by a team of passionate architects and master builders, we set out to redefine the standard of residential construction.
+              </p>
+              <p className="text-lg text-stone-600 leading-relaxed">
+                Over the past two decades, we've grown from a small local builder to one of the region's most respected names in luxury home construction. Yet, our core philosophy remains unchanged—every home we build receives the same meticulous attention to detail as if we were building it for our own families.
+              </p>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative h-[500px]"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1541888087581-124b358d086c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp" 
+                alt="Architects reviewing plans" 
+                className="w-full h-full object-cover rounded-3xl shadow-xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      <div className="py-24 bg-stone-900 text-stone-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-serif mb-4">Our Core Values</h2>
+            <p className="text-stone-400 max-w-2xl mx-auto text-lg">The principles that guide every nail we drive and every community we plan.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center"
+            >
+              <div className="w-16 h-16 bg-earth-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-8 h-8 text-earth-500" />
+              </div>
+              <h3 className="text-2xl font-serif mb-4">Uncompromising Quality</h3>
+              <p className="text-stone-400 leading-relaxed">
+                We use only premium materials and partner with the finest craftsmen. We never cut corners, ensuring your home stands the test of time.
+              </p>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="w-16 h-16 bg-earth-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Users className="w-8 h-8 text-earth-500" />
+              </div>
+              <h3 className="text-2xl font-serif mb-4">Community First</h3>
+              <p className="text-stone-400 leading-relaxed">
+                We don't just build houses; we design neighborhoods. We carefully plan green spaces, amenities, and layouts that foster connection.
+              </p>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-center"
+            >
+              <div className="w-16 h-16 bg-earth-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Star className="w-8 h-8 text-earth-500" />
+              </div>
+              <h3 className="text-2xl font-serif mb-4">Transparent Process</h3>
+              <p className="text-stone-400 leading-relaxed">
+                From the first handshake to handing over the keys, we believe in clear communication, honest pricing, and keeping you informed every step of the way.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      <div className="py-24 bg-stone-100 text-center">
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="text-4xl font-serif text-stone-900 mb-6">Ready to start your journey?</h2>
+          <p className="text-lg text-stone-600 mb-10">
+            Let us help you find or build the perfect home for your family's next chapter.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link to="/schedule" className="bg-stone-900 text-stone-50 px-8 py-4 rounded-full text-sm font-medium hover:bg-earth-600 transition-colors inline-flex items-center justify-center gap-2">
+              Schedule a Tour <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link to="/homes" className="bg-stone-200 text-stone-900 px-8 py-4 rounded-full text-sm font-medium hover:bg-stone-300 transition-colors inline-flex items-center justify-center">
+              Explore Our Homes
+            </Link>
+          </div>
         </div>
       </div>
     </main>
@@ -1039,6 +1257,7 @@ function AppContent() {
         <Route path="/homes/:id" element={<HomeDetailsPage />} />
         <Route path="/neighborhoods" element={<NeighborhoodsPage />} />
         <Route path="/schedule" element={<ScheduleTourPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
       <Footer />
     </div>
