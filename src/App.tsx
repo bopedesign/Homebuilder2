@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Star, MapPin, CheckCircle, Menu, X, Instagram, Facebook, Twitter, ChevronRight, Home, Users, Bed, Bath, Maximize } from 'lucide-react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useParams } from 'react-router-dom';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -565,19 +565,19 @@ function AllReviewsPage() {
   );
 }
 
+const homesData = [
+  { id: "aspen", name: "The Aspen", sqft: "2,450", beds: 3, baths: 2.5, price: "From $850k", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "The Aspen offers a perfect blend of cozy charm and modern elegance. Featuring an open-concept living area, a gourmet kitchen with a large island, and a luxurious master suite on the main level. Large windows flood the space with natural light, making it an inviting retreat for families of all sizes.", features: ["Gourmet Kitchen", "Main Level Master", "Covered Patio", "3-Car Garage", "Walk-in Pantry", "Vaulted Ceilings"] },
+  { id: "sequoia", name: "The Sequoia", sqft: "3,200", beds: 4, baths: 3.5, price: "From $1.1M", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "Designed for those who love to entertain, The Sequoia boasts a massive great room that flows seamlessly into an outdoor living space. The second floor features a versatile loft area and spacious secondary bedrooms, while the private study on the main floor provides the perfect work-from-home environment.", features: ["Outdoor Living Space", "Second Floor Loft", "Private Study", "Spa-like Master Bath", "Formal Dining Room", "Mudroom"] },
+  { id: "magnolia", name: "The Magnolia", sqft: "2,800", beds: 4, baths: 3, price: "From $920k", image: "https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "The Magnolia is a testament to timeless architecture. With its striking curb appeal and a thoughtfully laid out interior, this home balances formal and casual living spaces perfectly. The chef's kitchen overlooks a bright morning room, creating an ideal spot for family breakfasts.", features: ["Chef's Kitchen", "Morning Room", "Jack-and-Jill Bath", "Oversized Windows", "Custom Cabinetry", "Hardwood Floors"] },
+  { id: "juniper", name: "The Juniper", sqft: "1,950", beds: 3, baths: 2, price: "From $750k", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "Smart, efficient, and beautifully appointed, The Juniper is single-story living at its finest. Every square foot is maximized to provide spacious living areas without the upkeep of a larger home. The split-bedroom design ensures privacy for the master suite.", features: ["Single-Story Layout", "Split-Bedroom Design", "Energy Efficient", "Low Maintenance Yard", "Granite Countertops", "Smart Home Tech"] },
+  { id: "cypress", name: "The Cypress", sqft: "3,800", beds: 5, baths: 4.5, price: "From $1.4M", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "Our flagship model, The Cypress, offers unparalleled luxury and space. From the grand two-story foyer to the expansive finished basement option, this home is designed for grand living. It includes a multi-generational suite on the main floor and a breathtaking master wing upstairs.", features: ["Two-Story Foyer", "Multi-Gen Suite", "Finished Basement Option", "Wine Cellar", "Dual Walk-in Closets", "Luxury Finishes"] },
+  { id: "willow", name: "The Willow", sqft: "2,100", beds: 3, baths: 2.5, price: "From $790k", image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "The Willow combines traditional charm with modern necessities. A welcoming front porch leads into a bright, open living space. The upstairs features a convenient laundry room and a versatile bonus room that can serve as a playroom, gym, or home theater.", features: ["Welcoming Front Porch", "Upstairs Laundry", "Bonus Room", "Open Concept", "Stainless Steel Appliances", "Fenced Backyard"] }
+];
+
 function OurHomesPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const homes = [
-    { name: "The Aspen", sqft: "2,450", beds: 3, baths: 2.5, price: "From $850k", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
-    { name: "The Sequoia", sqft: "3,200", beds: 4, baths: 3.5, price: "From $1.1M", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
-    { name: "The Magnolia", sqft: "2,800", beds: 4, baths: 3, price: "From $920k", image: "https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
-    { name: "The Juniper", sqft: "1,950", beds: 3, baths: 2, price: "From $750k", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
-    { name: "The Cypress", sqft: "3,800", beds: 5, baths: 4.5, price: "From $1.4M", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
-    { name: "The Willow", sqft: "2,100", beds: 3, baths: 2.5, price: "From $790k", image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }
-  ];
 
   return (
     <main className="flex-grow pt-32 pb-24 bg-stone-50">
@@ -591,47 +591,192 @@ function OurHomesPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {homes.map((home, i) => (
-            <motion.div 
+          {homesData.map((home, i) => (
+            <Link 
+              to={`/homes/${home.id}`}
               key={i}
+            >
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden group cursor-pointer flex flex-col h-full"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img 
+                    src={home.image} 
+                    alt={home.name} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-4 right-4 bg-stone-900/80 backdrop-blur-sm text-stone-50 px-3 py-1 rounded-full text-sm font-medium">
+                    {home.price}
+                  </div>
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-serif text-stone-900 mb-4">{home.name}</h3>
+                  <div className="grid grid-cols-3 gap-4 mb-6 text-stone-600 text-sm mt-auto">
+                    <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
+                      <Maximize className="w-5 h-5 mb-1 text-earth-600" />
+                      <span>{home.sqft} sq ft</span>
+                    </div>
+                    <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
+                      <Bed className="w-5 h-5 mb-1 text-earth-600" />
+                      <span>{home.beds} Beds</span>
+                    </div>
+                    <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
+                      <Bath className="w-5 h-5 mb-1 text-earth-600" />
+                      <span>{home.baths} Baths</span>
+                    </div>
+                  </div>
+                  <div className="w-full py-3 border border-stone-200 rounded-xl text-stone-900 font-medium group-hover:bg-stone-50 transition-colors text-center">
+                    View Floor Plan
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function HomeDetailsPage() {
+  const { id } = useParams();
+  const home = homesData.find(h => h.id === id) || homesData[0];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  return (
+    <main className="flex-grow bg-stone-50 pb-24">
+      {/* Hero Section */}
+      <div className="w-full h-[60vh] relative mt-20">
+        <img 
+          src={home.image} 
+          alt={home.name} 
+          className="w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-stone-900/40"></div>
+        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-stone-900/90 to-transparent pt-32 pb-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-stone-300 text-sm font-medium tracking-[0.2em] uppercase mb-4 block"
+              >
+                Floor Plan
+              </motion.span>
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-5xl md:text-7xl font-serif text-stone-50 mb-2"
+              >
+                {home.name}
+              </motion.h1>
+            </div>
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden group cursor-pointer flex flex-col"
+              transition={{ delay: 0.2 }}
+              className="bg-stone-50/10 backdrop-blur-md border border-stone-50/20 px-6 py-4 rounded-2xl"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img 
-                  src={home.image} 
-                  alt={home.name} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute top-4 right-4 bg-stone-900/80 backdrop-blur-sm text-stone-50 px-3 py-1 rounded-full text-sm font-medium">
-                  {home.price}
-                </div>
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-2xl font-serif text-stone-900 mb-4">{home.name}</h3>
-                <div className="grid grid-cols-3 gap-4 mb-6 text-stone-600 text-sm mt-auto">
-                  <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
-                    <Maximize className="w-5 h-5 mb-1 text-earth-600" />
-                    <span>{home.sqft} sq ft</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
-                    <Bed className="w-5 h-5 mb-1 text-earth-600" />
-                    <span>{home.beds} Beds</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
-                    <Bath className="w-5 h-5 mb-1 text-earth-600" />
-                    <span>{home.baths} Baths</span>
-                  </div>
-                </div>
-                <button className="w-full py-3 border border-stone-200 rounded-xl text-stone-900 font-medium hover:bg-stone-50 transition-colors">
-                  View Floor Plan
-                </button>
-              </div>
+              <p className="text-stone-300 text-sm mb-1">Starting at</p>
+              <p className="text-3xl font-serif text-stone-50">{home.price}</p>
             </motion.div>
-          ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Stats Bar */}
+        <div className="flex flex-wrap gap-4 md:gap-12 mb-16 pb-12 border-b border-stone-200">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-stone-200 flex items-center justify-center text-earth-600">
+              <Maximize className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-stone-500 text-sm">Square Feet</p>
+              <p className="text-2xl font-serif text-stone-900">{home.sqft}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-stone-200 flex items-center justify-center text-earth-600">
+              <Bed className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-stone-500 text-sm">Bedrooms</p>
+              <p className="text-2xl font-serif text-stone-900">{home.beds}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-stone-200 flex items-center justify-center text-earth-600">
+              <Bath className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-stone-500 text-sm">Bathrooms</p>
+              <p className="text-2xl font-serif text-stone-900">{home.baths}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+          <div className="lg:col-span-2">
+            <h2 className="text-3xl font-serif text-stone-900 mb-6">About {home.name}</h2>
+            <p className="text-stone-600 text-lg leading-relaxed mb-12 font-light">
+              {home.description}
+            </p>
+
+            <h3 className="text-2xl font-serif text-stone-900 mb-6">Signature Features</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
+              {home.features.map((feature, idx) => (
+                <div key={idx} className="flex items-center gap-3 text-stone-700 bg-white p-4 rounded-xl border border-stone-100 shadow-sm">
+                  <CheckCircle className="w-5 h-5 text-earth-600 shrink-0" />
+                  <span className="font-medium">{feature}</span>
+                </div>
+              ))}
+            </div>
+
+            <h3 className="text-2xl font-serif text-stone-900 mb-6">Gallery</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <img src="https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Interior" className="w-full aspect-square object-cover rounded-2xl" referrerPolicy="no-referrer" />
+              <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kitchen" className="w-full aspect-square object-cover rounded-2xl" referrerPolicy="no-referrer" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
+            <div className="bg-white p-8 rounded-3xl shadow-xl border border-stone-100 sticky top-28">
+              <h3 className="text-2xl font-serif text-stone-900 mb-2">Interested in {home.name}?</h3>
+              <p className="text-stone-600 mb-8 font-light">Schedule a tour or request more information about this floor plan.</p>
+              
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-1">First Name</label>
+                  <input type="text" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Jane" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-1">Last Name</label>
+                  <input type="text" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Doe" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-1">Email Address</label>
+                  <input type="email" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="jane@example.com" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-1">Phone Number</label>
+                  <input type="tel" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="(555) 123-4567" />
+                </div>
+                <button className="w-full bg-stone-900 text-stone-50 py-4 rounded-xl font-medium hover:bg-earth-600 transition-colors mt-4">
+                  Request Information
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -646,6 +791,7 @@ function AppContent() {
         <Route path="/" element={<HomePage />} />
         <Route path="/reviews" element={<AllReviewsPage />} />
         <Route path="/homes" element={<OurHomesPage />} />
+        <Route path="/homes/:id" element={<HomeDetailsPage />} />
       </Routes>
       <Footer />
     </div>
