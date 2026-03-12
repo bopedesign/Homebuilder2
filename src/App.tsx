@@ -71,7 +71,7 @@ function HeroSection() {
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-stone-900/60"></div>
+        <div className="absolute inset-0 bg-stone-900/75"></div>
       </div>
       
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
@@ -79,7 +79,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="block text-stone-200 text-sm font-medium tracking-[0.2em] uppercase mb-6"
+          className="block text-stone-200 text-sm font-medium tracking-[0.2em] uppercase mb-6 drop-shadow-md"
         >
           Crafting Legacies Since 1998
         </motion.span>
@@ -87,7 +87,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl text-stone-50 font-serif leading-tight mb-8"
+          className="text-5xl md:text-7xl lg:text-8xl text-stone-50 font-serif leading-none mb-8 drop-shadow-xl"
         >
           Homes Built for <br/><span className="italic font-light">Generations</span>
         </motion.h1>
@@ -95,7 +95,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-lg md:text-xl text-stone-200 mb-10 max-w-2xl mx-auto font-light"
+          className="text-lg md:text-xl text-stone-200 mb-10 max-w-2xl mx-auto font-light drop-shadow-md"
         >
           Discover thoughtfully designed, masterfully constructed homes in the most sought-after neighborhoods.
         </motion.p>
