@@ -926,6 +926,7 @@ function ScheduleTourPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -939,6 +940,7 @@ function ScheduleTourPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setErrorMessage('');
 
     try {
       const response = await fetch('/api/schedule', {
@@ -949,16 +951,19 @@ function ScheduleTourPage() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json().catch(() => null);
+
       if (!response.ok) {
-        throw new Error('Failed to submit form');
+        throw new Error(data?.error || 'Failed to submit form');
       }
 
       setSubmitStatus('success');
       setFormData({
         firstName: '', lastName: '', email: '', phone: '', community: '', date: '', timeframe: '', notes: ''
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setErrorMessage(error.message);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -1026,7 +1031,8 @@ function ScheduleTourPage() {
               <form className="space-y-6" onSubmit={handleSubmit}>
                 {submitStatus === 'error' && (
                   <div className="bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 text-sm">
-                    There was an error submitting your request. Please try again later or contact us directly.
+                    <p className="font-semibold mb-1">Error submitting request:</p>
+                    <p>{errorMessage || "Please try again later or contact us directly."}</p>
                   </div>
                 )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
