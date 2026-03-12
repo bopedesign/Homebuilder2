@@ -71,10 +71,13 @@ function HeroSection() {
     <section className="relative h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80&fm=webp" 
+          srcSet="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp 1200w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80&fm=webp 1920w"
+          sizes="100vw"
           alt="Modern neighborhood home with a nice lawn at dusk" 
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-stone-900/50"></div>
       </div>
@@ -167,18 +170,20 @@ function AboutHomesSection() {
           >
             <div className="aspect-[4/5] rounded-2xl overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp" 
                 alt="Modern kitchen interior" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
+                loading="lazy"
               />
             </div>
             <div className="absolute -bottom-8 -left-8 w-2/3 aspect-square rounded-2xl overflow-hidden border-8 border-stone-50 shadow-xl hidden md:block">
               <img 
-                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80&fm=webp" 
                 alt="Cozy living room" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
+                loading="lazy"
               />
             </div>
           </motion.div>
@@ -194,19 +199,19 @@ function NeighborhoodsSection() {
       name: "Whispering Pines",
       location: "North Scottsdale",
       price: "From the $800s",
-      image: "https://images.unsplash.com/photo-1515263487990-61b07816b324?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      image: "https://images.unsplash.com/photo-1515263487990-61b07816b324?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80&fm=webp"
     },
     {
       name: "The Reserve at Oak Creek",
       location: "Westlake Valley",
       price: "From the $1.2M",
-      image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80&fm=webp"
     },
     {
       name: "Highland Estates",
       location: "East Ridge",
       price: "From the $950s",
-      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80&fm=webp"
     }
   ];
 
@@ -244,6 +249,7 @@ function NeighborhoodsSection() {
                   alt={hood.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <span className="text-stone-50 font-medium flex items-center gap-2">
@@ -313,10 +319,11 @@ function WhyUsSection() {
           
           <div className="relative h-full min-h-[400px] rounded-2xl overflow-hidden">
             <img 
-              src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp" 
               alt="Architect reviewing plans" 
               className="absolute inset-0 w-full h-full object-cover"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-stone-900/20"></div>
             <div className="absolute bottom-8 left-8 right-8 bg-stone-900/80 backdrop-blur-md p-6 rounded-xl border border-stone-700">
@@ -566,12 +573,12 @@ function AllReviewsPage() {
 }
 
 const homesData = [
-  { id: "aspen", name: "The Aspen", sqft: "2,450", beds: 3, baths: 2.5, price: "From $850k", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "The Aspen offers a perfect blend of cozy charm and modern elegance. Featuring an open-concept living area, a gourmet kitchen with a large island, and a luxurious master suite on the main level. Large windows flood the space with natural light, making it an inviting retreat for families of all sizes.", features: ["Gourmet Kitchen", "Main Level Master", "Covered Patio", "3-Car Garage", "Walk-in Pantry", "Vaulted Ceilings"] },
-  { id: "sequoia", name: "The Sequoia", sqft: "3,200", beds: 4, baths: 3.5, price: "From $1.1M", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "Designed for those who love to entertain, The Sequoia boasts a massive great room that flows seamlessly into an outdoor living space. The second floor features a versatile loft area and spacious secondary bedrooms, while the private study on the main floor provides the perfect work-from-home environment.", features: ["Outdoor Living Space", "Second Floor Loft", "Private Study", "Spa-like Master Bath", "Formal Dining Room", "Mudroom"] },
-  { id: "magnolia", name: "The Magnolia", sqft: "2,800", beds: 4, baths: 3, price: "From $920k", image: "https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "The Magnolia is a testament to timeless architecture. With its striking curb appeal and a thoughtfully laid out interior, this home balances formal and casual living spaces perfectly. The chef's kitchen overlooks a bright morning room, creating an ideal spot for family breakfasts.", features: ["Chef's Kitchen", "Morning Room", "Jack-and-Jill Bath", "Oversized Windows", "Custom Cabinetry", "Hardwood Floors"] },
-  { id: "juniper", name: "The Juniper", sqft: "1,950", beds: 3, baths: 2, price: "From $750k", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "Smart, efficient, and beautifully appointed, The Juniper is single-story living at its finest. Every square foot is maximized to provide spacious living areas without the upkeep of a larger home. The split-bedroom design ensures privacy for the master suite.", features: ["Single-Story Layout", "Split-Bedroom Design", "Energy Efficient", "Low Maintenance Yard", "Granite Countertops", "Smart Home Tech"] },
-  { id: "cypress", name: "The Cypress", sqft: "3,800", beds: 5, baths: 4.5, price: "From $1.4M", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "Our flagship model, The Cypress, offers unparalleled luxury and space. From the grand two-story foyer to the expansive finished basement option, this home is designed for grand living. It includes a multi-generational suite on the main floor and a breathtaking master wing upstairs.", features: ["Two-Story Foyer", "Multi-Gen Suite", "Finished Basement Option", "Wine Cellar", "Dual Walk-in Closets", "Luxury Finishes"] },
-  { id: "willow", name: "The Willow", sqft: "2,100", beds: 3, baths: 2.5, price: "From $790k", image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", description: "The Willow combines traditional charm with modern necessities. A welcoming front porch leads into a bright, open living space. The upstairs features a convenient laundry room and a versatile bonus room that can serve as a playroom, gym, or home theater.", features: ["Welcoming Front Porch", "Upstairs Laundry", "Bonus Room", "Open Concept", "Stainless Steel Appliances", "Fenced Backyard"] }
+  { id: "aspen", name: "The Aspen", sqft: "2,450", beds: 3, baths: 2.5, price: "From $850k", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp", description: "The Aspen offers a perfect blend of cozy charm and modern elegance. Featuring an open-concept living area, a gourmet kitchen with a large island, and a luxurious master suite on the main level. Large windows flood the space with natural light, making it an inviting retreat for families of all sizes.", features: ["Gourmet Kitchen", "Main Level Master", "Covered Patio", "3-Car Garage", "Walk-in Pantry", "Vaulted Ceilings"] },
+  { id: "sequoia", name: "The Sequoia", sqft: "3,200", beds: 4, baths: 3.5, price: "From $1.1M", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp", description: "Designed for those who love to entertain, The Sequoia boasts a massive great room that flows seamlessly into an outdoor living space. The second floor features a versatile loft area and spacious secondary bedrooms, while the private study on the main floor provides the perfect work-from-home environment.", features: ["Outdoor Living Space", "Second Floor Loft", "Private Study", "Spa-like Master Bath", "Formal Dining Room", "Mudroom"] },
+  { id: "magnolia", name: "The Magnolia", sqft: "2,800", beds: 4, baths: 3, price: "From $920k", image: "https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp", description: "The Magnolia is a testament to timeless architecture. With its striking curb appeal and a thoughtfully laid out interior, this home balances formal and casual living spaces perfectly. The chef's kitchen overlooks a bright morning room, creating an ideal spot for family breakfasts.", features: ["Chef's Kitchen", "Morning Room", "Jack-and-Jill Bath", "Oversized Windows", "Custom Cabinetry", "Hardwood Floors"] },
+  { id: "juniper", name: "The Juniper", sqft: "1,950", beds: 3, baths: 2, price: "From $750k", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp", description: "Smart, efficient, and beautifully appointed, The Juniper is single-story living at its finest. Every square foot is maximized to provide spacious living areas without the upkeep of a larger home. The split-bedroom design ensures privacy for the master suite.", features: ["Single-Story Layout", "Split-Bedroom Design", "Energy Efficient", "Low Maintenance Yard", "Granite Countertops", "Smart Home Tech"] },
+  { id: "cypress", name: "The Cypress", sqft: "3,800", beds: 5, baths: 4.5, price: "From $1.4M", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp", description: "Our flagship model, The Cypress, offers unparalleled luxury and space. From the grand two-story foyer to the expansive finished basement option, this home is designed for grand living. It includes a multi-generational suite on the main floor and a breathtaking master wing upstairs.", features: ["Two-Story Foyer", "Multi-Gen Suite", "Finished Basement Option", "Wine Cellar", "Dual Walk-in Closets", "Luxury Finishes"] },
+  { id: "willow", name: "The Willow", sqft: "2,100", beds: 3, baths: 2.5, price: "From $790k", image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp", description: "The Willow combines traditional charm with modern necessities. A welcoming front porch leads into a bright, open living space. The upstairs features a convenient laundry room and a versatile bonus room that can serve as a playroom, gym, or home theater.", features: ["Welcoming Front Porch", "Upstairs Laundry", "Bonus Room", "Open Concept", "Stainless Steel Appliances", "Fenced Backyard"] }
 ];
 
 function OurHomesPage() {
@@ -608,6 +615,7 @@ function OurHomesPage() {
                     alt={home.name} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     referrerPolicy="no-referrer"
+                    loading="lazy"
                   />
                   <div className="absolute top-4 right-4 bg-stone-900/80 backdrop-blur-sm text-stone-50 px-3 py-1 rounded-full text-sm font-medium">
                     {home.price}
@@ -655,10 +663,13 @@ function HomeDetailsPage() {
       {/* Hero Section */}
       <div className="w-full h-[60vh] relative mt-20">
         <img 
-          src={home.image} 
+          src={home.image.replace('w=800', 'w=1920')} 
+          srcSet={`${home.image} 800w, ${home.image.replace('w=800', 'w=1200')} 1200w, ${home.image.replace('w=800', 'w=1920')} 1920w`}
+          sizes="100vw"
           alt={home.name} 
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-stone-900/40"></div>
         <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-stone-900/90 to-transparent pt-32 pb-12 px-4 sm:px-6 lg:px-8">
@@ -744,8 +755,8 @@ function HomeDetailsPage() {
 
             <h3 className="text-2xl font-serif text-stone-900 mb-6">Gallery</h3>
             <div className="grid grid-cols-2 gap-4">
-              <img src="https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Interior" className="w-full aspect-square object-cover rounded-2xl" referrerPolicy="no-referrer" />
-              <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kitchen" className="w-full aspect-square object-cover rounded-2xl" referrerPolicy="no-referrer" />
+              <img src="https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp" alt="Interior" className="w-full aspect-square object-cover rounded-2xl" referrerPolicy="no-referrer" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp" alt="Kitchen" className="w-full aspect-square object-cover rounded-2xl" referrerPolicy="no-referrer" loading="lazy" />
             </div>
           </div>
 
@@ -794,7 +805,7 @@ function NeighborhoodsPage() {
       name: "Whispering Pines",
       location: "North Scottsdale",
       price: "From the $800s",
-      image: "https://images.unsplash.com/photo-1515263487990-61b07816b324?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1515263487990-61b07816b324?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp",
       description: "Nestled among mature pine trees, this serene community offers large lots and a community clubhouse.",
       amenities: ["Community Pool", "Walking Trails", "Clubhouse", "Gated Entry"]
     },
@@ -803,7 +814,7 @@ function NeighborhoodsPage() {
       name: "The Reserve at Oak Creek",
       location: "Westlake Valley",
       price: "From the $1.2M",
-      image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp",
       description: "Luxury living at its finest. The Reserve features custom-built estates with breathtaking valley views.",
       amenities: ["Golf Course Access", "Tennis Courts", "Private Security", "Fitness Center"]
     },
@@ -812,7 +823,7 @@ function NeighborhoodsPage() {
       name: "Highland Estates",
       location: "East Ridge",
       price: "From the $950s",
-      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp",
       description: "A family-friendly neighborhood with top-rated schools, multiple parks, and a vibrant community atmosphere.",
       amenities: ["Playgrounds", "Top-Rated Schools", "Community Garden", "Dog Park"]
     }
@@ -845,6 +856,7 @@ function NeighborhoodsPage() {
                     alt={hood.name} 
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
+                    loading="lazy"
                   />
                 </div>
               </motion.div>
