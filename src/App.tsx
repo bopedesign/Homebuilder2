@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Star, MapPin, CheckCircle, Menu, X, Instagram, Facebook, Twitter, ChevronRight, Home, Users } from 'lucide-react';
+import { ArrowRight, Star, MapPin, CheckCircle, Menu, X, Instagram, Facebook, Twitter, ChevronRight, Home, Users, Bed, Bath, Maximize } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,27 +17,29 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navDark = !isHomePage || scrolled;
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-stone-50/90 backdrop-blur-md border-b border-stone-200/50 py-0' : 'bg-transparent py-2'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${navDark ? 'bg-stone-50/90 backdrop-blur-md border-b border-stone-200/50 py-0' : 'bg-transparent py-2'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-            <Home className={`w-8 h-8 ${scrolled ? 'text-earth-600' : 'text-stone-50'}`} />
-            <span className={`font-serif text-2xl font-semibold tracking-tight ${scrolled ? 'text-stone-900' : 'text-stone-50'}`}>Oak & Iron</span>
-          </div>
+          <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+            <Home className={`w-8 h-8 ${navDark ? 'text-earth-600' : 'text-stone-50'}`} />
+            <span className={`font-serif text-2xl font-semibold tracking-tight ${navDark ? 'text-stone-900' : 'text-stone-50'}`}>Oak & Iron</span>
+          </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#homes" className={`text-sm font-medium transition-colors ${scrolled ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Our Homes</a>
-            <a href="#neighborhoods" className={`text-sm font-medium transition-colors ${scrolled ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Neighborhoods</a>
-            <a href="#about" className={`text-sm font-medium transition-colors ${scrolled ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>About Us</a>
-            <a href="#reviews" className={`text-sm font-medium transition-colors ${scrolled ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Reviews</a>
-            <button className={`${scrolled ? 'bg-stone-900 text-stone-50 hover:bg-earth-600' : 'bg-stone-50 text-stone-900 hover:bg-stone-200'} px-5 py-2.5 rounded-full text-sm font-medium transition-colors`}>
+            <Link to="/homes" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Our Homes</Link>
+            <a href="/#neighborhoods" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Neighborhoods</a>
+            <a href="/#about" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>About Us</a>
+            <Link to="/reviews" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Reviews</Link>
+            <button className={`${navDark ? 'bg-stone-900 text-stone-50 hover:bg-earth-600' : 'bg-stone-50 text-stone-900 hover:bg-stone-200'} px-5 py-2.5 rounded-full text-sm font-medium transition-colors`}>
               Schedule a Tour
             </button>
           </div>
 
           <div className="md:hidden flex items-center">
-            <button onClick={() => setIsOpen(!isOpen)} className={scrolled ? 'text-stone-900' : 'text-stone-50'}>
+            <button onClick={() => setIsOpen(!isOpen)} className={navDark ? 'text-stone-900' : 'text-stone-50'}>
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -45,10 +50,10 @@ function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-stone-50 border-b border-stone-200">
           <div className="px-4 pt-2 pb-6 space-y-1">
-            <a href="#homes" className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Our Homes</a>
-            <a href="#neighborhoods" className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Neighborhoods</a>
-            <a href="#about" className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">About Us</a>
-            <a href="#reviews" className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Reviews</a>
+            <Link to="/homes" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Our Homes</Link>
+            <a href="/#neighborhoods" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Neighborhoods</a>
+            <a href="/#about" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">About Us</a>
+            <Link to="/reviews" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Reviews</Link>
             <div className="pt-4">
               <button className="w-full bg-stone-900 text-stone-50 px-5 py-3 rounded-full text-sm font-medium hover:bg-earth-600 transition-colors">
                 Schedule a Tour
@@ -409,10 +414,10 @@ function Footer() {
           <div>
             <h4 className="text-stone-50 font-medium mb-6">Quick Links</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="#homes" className="hover:text-stone-200 transition-colors">Our Homes</a></li>
-              <li><a href="#neighborhoods" className="hover:text-stone-200 transition-colors">Communities</a></li>
-              <li><a href="#about" className="hover:text-stone-200 transition-colors">About Us</a></li>
-              <li><a href="#reviews" className="hover:text-stone-200 transition-colors">Testimonials</a></li>
+              <li><Link to="/homes" className="hover:text-stone-200 transition-colors">Our Homes</Link></li>
+              <li><a href="/#neighborhoods" className="hover:text-stone-200 transition-colors">Communities</a></li>
+              <li><a href="/#about" className="hover:text-stone-200 transition-colors">About Us</a></li>
+              <li><Link to="/reviews" className="hover:text-stone-200 transition-colors">Testimonials</Link></li>
               <li><a href="#" className="hover:text-stone-200 transition-colors">Design Studio</a></li>
             </ul>
           </div>
@@ -455,18 +460,202 @@ function Footer() {
   );
 }
 
-export default function App() {
+function HomePage() {
+  return (
+    <main className="flex-grow">
+      <HeroSection />
+      <AboutHomesSection />
+      <NeighborhoodsSection />
+      <WhyUsSection />
+      <ReviewsSection />
+    </main>
+  );
+}
+
+function AllReviewsPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const allReviews = [
+    {
+      text: "The attention to detail in our new Oak & Iron home is incredible. The entire process from selecting our lot to the final walkthrough was seamless and enjoyable.",
+      author: "Sarah & Michael T.",
+      community: "Whispering Pines",
+      date: "October 2025"
+    },
+    {
+      text: "We looked at several builders before choosing Oak & Iron. Their floor plans just made sense for our family, and the quality of construction is evident in every room.",
+      author: "David R.",
+      community: "Highland Estates",
+      date: "August 2025"
+    },
+    {
+      text: "The design center experience was fantastic. They helped us bring our vision to life while staying within our budget. We couldn't be happier with our forever home.",
+      author: "The Johnson Family",
+      community: "The Reserve",
+      date: "June 2025"
+    },
+    {
+      text: "From the first meeting to the day we got our keys, the Oak & Iron team was professional, transparent, and truly cared about our satisfaction. Highly recommend!",
+      author: "Emily & James W.",
+      community: "Whispering Pines",
+      date: "May 2025"
+    },
+    {
+      text: "We've built three homes in our lifetime, and this was by far the best experience. The craftsmanship is unparalleled, and the warranty team is incredibly responsive.",
+      author: "Robert M.",
+      community: "The Reserve",
+      date: "March 2025"
+    },
+    {
+      text: "Our new home is everything we dreamed of and more. The energy efficiency features have already saved us money, and the open concept layout is perfect for entertaining.",
+      author: "Jessica L.",
+      community: "Highland Estates",
+      date: "January 2025"
+    }
+  ];
+
+  return (
+    <main className="flex-grow pt-32 pb-24 bg-stone-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="text-earth-600 text-sm font-semibold tracking-wider uppercase mb-4 block">Client Stories</span>
+          <h1 className="text-5xl md:text-6xl font-serif text-stone-900 mb-6">Hear From Our Homeowners</h1>
+          <p className="text-stone-600 text-lg font-light">
+            Read authentic experiences from families who have chosen Oak & Iron to build their dream homes across our various communities.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {allReviews.map((review, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="bg-white p-8 rounded-2xl shadow-sm border border-stone-100 flex flex-col h-full"
+            >
+              <div className="flex gap-1 mb-6">
+                {[...Array(5)].map((_, j) => (
+                  <Star key={j} className="w-4 h-4 fill-earth-500 text-earth-500" />
+                ))}
+              </div>
+              <p className="text-stone-700 italic mb-8 leading-relaxed flex-grow">"{review.text}"</p>
+              <div className="pt-6 border-t border-stone-100">
+                <p className="font-medium text-stone-900">{review.author}</p>
+                <div className="flex justify-between items-center mt-1">
+                  <p className="text-sm text-stone-500">{review.community}</p>
+                  <p className="text-xs text-stone-400">{review.date}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        <div className="mt-20 text-center bg-stone-900 rounded-3xl p-12 text-stone-50">
+          <h2 className="text-3xl font-serif mb-4">Ready to start your own story?</h2>
+          <p className="text-stone-400 mb-8 max-w-2xl mx-auto">Join hundreds of happy homeowners and let us build the perfect backdrop for your family's memories.</p>
+          <button className="bg-earth-600 text-stone-50 px-8 py-4 rounded-full text-sm font-medium hover:bg-earth-500 transition-colors">
+            Schedule a Consultation
+          </button>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function OurHomesPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const homes = [
+    { name: "The Aspen", sqft: "2,450", beds: 3, baths: 2.5, price: "From $850k", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
+    { name: "The Sequoia", sqft: "3,200", beds: 4, baths: 3.5, price: "From $1.1M", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
+    { name: "The Magnolia", sqft: "2,800", beds: 4, baths: 3, price: "From $920k", image: "https://images.unsplash.com/photo-1600607687931-cecebd808ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
+    { name: "The Juniper", sqft: "1,950", beds: 3, baths: 2, price: "From $750k", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
+    { name: "The Cypress", sqft: "3,800", beds: 5, baths: 4.5, price: "From $1.4M", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
+    { name: "The Willow", sqft: "2,100", beds: 3, baths: 2.5, price: "From $790k", image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }
+  ];
+
+  return (
+    <main className="flex-grow pt-32 pb-24 bg-stone-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="text-earth-600 text-sm font-semibold tracking-wider uppercase mb-4 block">Floor Plans</span>
+          <h1 className="text-5xl md:text-6xl font-serif text-stone-900 mb-6">Our Home Collection</h1>
+          <p className="text-stone-600 text-lg font-light">
+            Explore our portfolio of thoughtfully designed floor plans, each crafted with modern living and timeless aesthetics in mind.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {homes.map((home, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden group cursor-pointer flex flex-col"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img 
+                  src={home.image} 
+                  alt={home.name} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 right-4 bg-stone-900/80 backdrop-blur-sm text-stone-50 px-3 py-1 rounded-full text-sm font-medium">
+                  {home.price}
+                </div>
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-2xl font-serif text-stone-900 mb-4">{home.name}</h3>
+                <div className="grid grid-cols-3 gap-4 mb-6 text-stone-600 text-sm mt-auto">
+                  <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
+                    <Maximize className="w-5 h-5 mb-1 text-earth-600" />
+                    <span>{home.sqft} sq ft</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
+                    <Bed className="w-5 h-5 mb-1 text-earth-600" />
+                    <span>{home.beds} Beds</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center p-3 bg-stone-50 rounded-xl">
+                    <Bath className="w-5 h-5 mb-1 text-earth-600" />
+                    <span>{home.baths} Baths</span>
+                  </div>
+                </div>
+                <button className="w-full py-3 border border-stone-200 rounded-xl text-stone-900 font-medium hover:bg-stone-50 transition-colors">
+                  View Floor Plan
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function AppContent() {
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-earth-500/30">
       <Navbar />
-      <main className="flex-grow">
-        <HeroSection />
-        <AboutHomesSection />
-        <NeighborhoodsSection />
-        <WhyUsSection />
-        <ReviewsSection />
-      </main>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/reviews" element={<AllReviewsPage />} />
+        <Route path="/homes" element={<OurHomesPage />} />
+      </Routes>
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
