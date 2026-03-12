@@ -30,12 +30,12 @@ function Navbar() {
           
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/homes" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Our Homes</Link>
-            <a href="/#neighborhoods" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Neighborhoods</a>
+            <Link to="/neighborhoods" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Neighborhoods</Link>
             <a href="/#about" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>About Us</a>
             <Link to="/reviews" className={`text-sm font-medium transition-colors ${navDark ? 'text-stone-600 hover:text-earth-600' : 'text-stone-200 hover:text-stone-50'}`}>Reviews</Link>
-            <button className={`${navDark ? 'bg-stone-900 text-stone-50 hover:bg-earth-600' : 'bg-stone-50 text-stone-900 hover:bg-stone-200'} px-5 py-2.5 rounded-full text-sm font-medium transition-colors`}>
+            <Link to="/schedule" className={`${navDark ? 'bg-stone-900 text-stone-50 hover:bg-earth-600' : 'bg-stone-50 text-stone-900 hover:bg-stone-200'} px-5 py-2.5 rounded-full text-sm font-medium transition-colors inline-block`}>
               Schedule a Tour
-            </button>
+            </Link>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -51,13 +51,13 @@ function Navbar() {
         <div className="md:hidden bg-stone-50 border-b border-stone-200">
           <div className="px-4 pt-2 pb-6 space-y-1">
             <Link to="/homes" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Our Homes</Link>
-            <a href="/#neighborhoods" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Neighborhoods</a>
+            <Link to="/neighborhoods" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Neighborhoods</Link>
             <a href="/#about" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">About Us</a>
             <Link to="/reviews" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-base font-medium text-stone-600 hover:text-earth-600">Reviews</Link>
             <div className="pt-4">
-              <button className="w-full bg-stone-900 text-stone-50 px-5 py-3 rounded-full text-sm font-medium hover:bg-earth-600 transition-colors">
+              <Link to="/schedule" onClick={() => setIsOpen(false)} className="w-full flex justify-center bg-stone-900 text-stone-50 px-5 py-3 rounded-full text-sm font-medium hover:bg-earth-600 transition-colors">
                 Schedule a Tour
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -223,9 +223,9 @@ function NeighborhoodsSection() {
               We don't just build homes; we curate communities. Discover neighborhoods with tree-lined streets, parks, and amenities that bring people together.
             </p>
           </div>
-          <button className="shrink-0 bg-transparent border border-stone-300 text-stone-900 px-6 py-3 rounded-full text-sm font-medium hover:border-stone-900 transition-colors">
+          <Link to="/neighborhoods" className="shrink-0 bg-transparent border border-stone-300 text-stone-900 px-6 py-3 rounded-full text-sm font-medium hover:border-stone-900 transition-colors inline-block">
             View All Communities
-          </button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -415,7 +415,7 @@ function Footer() {
             <h4 className="text-stone-50 font-medium mb-6">Quick Links</h4>
             <ul className="space-y-3 text-sm">
               <li><Link to="/homes" className="hover:text-stone-200 transition-colors">Our Homes</Link></li>
-              <li><a href="/#neighborhoods" className="hover:text-stone-200 transition-colors">Communities</a></li>
+              <li><Link to="/neighborhoods" className="hover:text-stone-200 transition-colors">Communities</Link></li>
               <li><a href="/#about" className="hover:text-stone-200 transition-colors">About Us</a></li>
               <li><Link to="/reviews" className="hover:text-stone-200 transition-colors">Testimonials</Link></li>
               <li><a href="#" className="hover:text-stone-200 transition-colors">Design Studio</a></li>
@@ -556,9 +556,9 @@ function AllReviewsPage() {
         <div className="mt-20 text-center bg-stone-900 rounded-3xl p-12 text-stone-50">
           <h2 className="text-3xl font-serif mb-4">Ready to start your own story?</h2>
           <p className="text-stone-400 mb-8 max-w-2xl mx-auto">Join hundreds of happy homeowners and let us build the perfect backdrop for your family's memories.</p>
-          <button className="bg-earth-600 text-stone-50 px-8 py-4 rounded-full text-sm font-medium hover:bg-earth-500 transition-colors">
+          <Link to="/schedule" className="bg-earth-600 text-stone-50 px-8 py-4 rounded-full text-sm font-medium hover:bg-earth-500 transition-colors inline-block">
             Schedule a Consultation
-          </button>
+          </Link>
         </div>
       </div>
     </main>
@@ -783,6 +783,226 @@ function HomeDetailsPage() {
   );
 }
 
+function NeighborhoodsPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const neighborhoodsData = [
+    {
+      id: "whispering-pines",
+      name: "Whispering Pines",
+      location: "North Scottsdale",
+      price: "From the $800s",
+      image: "https://images.unsplash.com/photo-1515263487990-61b07816b324?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "Nestled among mature pine trees, this serene community offers large lots and a community clubhouse.",
+      amenities: ["Community Pool", "Walking Trails", "Clubhouse", "Gated Entry"]
+    },
+    {
+      id: "reserve-oak-creek",
+      name: "The Reserve at Oak Creek",
+      location: "Westlake Valley",
+      price: "From the $1.2M",
+      image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "Luxury living at its finest. The Reserve features custom-built estates with breathtaking valley views.",
+      amenities: ["Golf Course Access", "Tennis Courts", "Private Security", "Fitness Center"]
+    },
+    {
+      id: "highland-estates",
+      name: "Highland Estates",
+      location: "East Ridge",
+      price: "From the $950s",
+      image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "A family-friendly neighborhood with top-rated schools, multiple parks, and a vibrant community atmosphere.",
+      amenities: ["Playgrounds", "Top-Rated Schools", "Community Garden", "Dog Park"]
+    }
+  ];
+
+  return (
+    <main className="flex-grow pt-32 pb-24 bg-stone-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="text-earth-600 text-sm font-semibold tracking-wider uppercase mb-4 block">Our Communities</span>
+          <h1 className="text-5xl md:text-6xl font-serif text-stone-900 mb-6">Find Your Place</h1>
+          <p className="text-stone-600 text-lg font-light">
+            Discover thoughtfully planned neighborhoods designed to foster connection, celebrate nature, and provide the perfect setting for your new home.
+          </p>
+        </div>
+
+        <div className="space-y-24">
+          {neighborhoodsData.map((hood, i) => (
+            <div key={i} className={`flex flex-col ${i % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 items-center`}>
+              <motion.div 
+                initial={{ opacity: 0, x: i % 2 === 1 ? 30 : -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="w-full lg:w-1/2"
+              >
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                  <img 
+                    src={hood.image} 
+                    alt={hood.name} 
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, x: i % 2 === 1 ? -30 : 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="w-full lg:w-1/2"
+              >
+                <div className="flex items-center gap-2 text-stone-500 mb-4">
+                  <MapPin className="w-5 h-5 text-earth-600" />
+                  <span className="font-medium tracking-wide uppercase text-sm">{hood.location}</span>
+                </div>
+                <h2 className="text-4xl font-serif text-stone-900 mb-4">{hood.name}</h2>
+                <p className="text-2xl font-light text-stone-500 mb-6">{hood.price}</p>
+                <p className="text-stone-600 text-lg leading-relaxed mb-8 font-light">
+                  {hood.description}
+                </p>
+                
+                <h3 className="text-lg font-medium text-stone-900 mb-4">Community Amenities</h3>
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {hood.amenities.map((amenity, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-stone-700">
+                      <CheckCircle className="w-4 h-4 text-earth-600 shrink-0" />
+                      <span className="text-sm">{amenity}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <Link to="/schedule" className="inline-flex items-center justify-center bg-stone-900 text-stone-50 px-8 py-4 rounded-full text-sm font-medium hover:bg-earth-600 transition-colors">
+                  Schedule a Tour
+                </Link>
+              </motion.div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function ScheduleTourPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <main className="flex-grow pt-32 pb-24 bg-stone-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="text-earth-600 text-sm font-semibold tracking-wider uppercase mb-4 block">Visit Us</span>
+            <h1 className="text-5xl md:text-6xl font-serif text-stone-900 mb-6">Experience It <br/><span className="italic text-stone-500">In Person</span></h1>
+            <p className="text-stone-600 text-lg font-light leading-relaxed mb-12">
+              There's no better way to understand the Oak & Iron difference than walking through our homes. Schedule a private tour with one of our design consultants to explore our communities, view our model homes, and discuss your vision.
+            </p>
+            
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-stone-200 flex items-center justify-center text-earth-600 shrink-0">
+                  <MapPin className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-medium text-stone-900 mb-1">Design Studio & Headquarters</h3>
+                  <p className="text-stone-600 font-light">123 Builder Way, Suite 100<br/>Design City, ST 12345</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-stone-200 flex items-center justify-center text-earth-600 shrink-0">
+                  <Users className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-medium text-stone-900 mb-1">Contact Our Team</h3>
+                  <p className="text-stone-600 font-light">hello@oakandiron.com<br/>(555) 123-4567</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-stone-100"
+          >
+            <h2 className="text-2xl font-serif text-stone-900 mb-6">Request a Tour</h2>
+            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">First Name</label>
+                  <input type="text" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Jane" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">Last Name</label>
+                  <input type="text" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Doe" />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">Email Address</label>
+                  <input type="email" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="jane@example.com" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">Phone Number</label>
+                  <input type="tel" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="(555) 123-4567" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">Community of Interest</label>
+                <select className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700">
+                  <option value="">Select a community...</option>
+                  <option value="whispering-pines">Whispering Pines</option>
+                  <option value="reserve">The Reserve at Oak Creek</option>
+                  <option value="highland">Highland Estates</option>
+                  <option value="undecided">I'm not sure yet</option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">Preferred Date</label>
+                  <input type="date" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-2">Preferred Time</label>
+                  <select className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors text-stone-700">
+                    <option value="">Select a time...</option>
+                    <option value="morning">Morning (9AM - 12PM)</option>
+                    <option value="afternoon">Afternoon (12PM - 4PM)</option>
+                    <option value="evening">Evening (4PM - 6PM)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-2">Additional Notes or Questions</label>
+                <textarea rows={4} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-earth-500 focus:ring-1 focus:ring-earth-500 transition-colors" placeholder="Tell us what you're looking for..."></textarea>
+              </div>
+
+              <button className="w-full bg-stone-900 text-stone-50 py-4 rounded-xl font-medium hover:bg-earth-600 transition-colors text-lg">
+                Confirm Request
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 function AppContent() {
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-earth-500/30">
@@ -792,6 +1012,8 @@ function AppContent() {
         <Route path="/reviews" element={<AllReviewsPage />} />
         <Route path="/homes" element={<OurHomesPage />} />
         <Route path="/homes/:id" element={<HomeDetailsPage />} />
+        <Route path="/neighborhoods" element={<NeighborhoodsPage />} />
+        <Route path="/schedule" element={<ScheduleTourPage />} />
       </Routes>
       <Footer />
     </div>
