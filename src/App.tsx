@@ -951,10 +951,17 @@ function ScheduleTourPage() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json().catch(() => null);
+      let data;
+      let responseText = '';
+      try {
+        responseText = await response.text();
+        data = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Failed to parse response as JSON. Raw response:", responseText);
+      }
 
       if (!response.ok) {
-        throw new Error(data?.error || 'Failed to submit form');
+        throw new Error(data?.error || `Server error: ${response.status} ${response.statusText}`);
       }
 
       setSubmitStatus('success');
