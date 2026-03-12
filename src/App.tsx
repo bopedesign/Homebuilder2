@@ -63,7 +63,7 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img 
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
@@ -71,46 +71,46 @@ function HeroSection() {
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-stone-900/75"></div>
+        <div className="absolute inset-0 bg-stone-900/50"></div>
       </div>
       
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
-        <motion.span 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="block text-stone-200 text-sm font-medium tracking-[0.2em] uppercase mb-6 drop-shadow-md"
-        >
-          Crafting Legacies Since 1998
-        </motion.span>
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl text-stone-50 font-serif leading-none mb-8 drop-shadow-xl"
-        >
-          Homes Built for <br/><span className="italic font-light">Generations</span>
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-lg md:text-xl text-stone-200 mb-10 max-w-2xl mx-auto font-light drop-shadow-md"
-        >
-          Discover thoughtfully designed, masterfully constructed homes in the most sought-after neighborhoods.
-        </motion.p>
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mt-20 flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+        <div className="max-w-3xl text-left">
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="block text-stone-200 text-sm font-medium tracking-[0.2em] uppercase mb-6 drop-shadow-md"
+          >
+            Crafting Legacies Since 1998
+          </motion.span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-5xl md:text-7xl lg:text-8xl text-stone-50 font-serif leading-none mb-8 lg:mb-0 drop-shadow-xl"
+          >
+            Homes Built for <br/><span className="italic font-light">Generations</span>
+          </motion.h1>
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="bg-stone-900/40 backdrop-blur-md border border-stone-50/20 p-8 rounded-3xl max-w-md shadow-2xl"
         >
-          <button className="w-full sm:w-auto bg-stone-50 text-stone-900 px-8 py-4 rounded-full text-sm font-medium hover:bg-stone-200 transition-colors flex items-center justify-center gap-2">
-            Explore Our Homes <ArrowRight className="w-4 h-4" />
-          </button>
-          <button className="w-full sm:w-auto bg-transparent border border-stone-50 text-stone-50 px-8 py-4 rounded-full text-sm font-medium hover:bg-stone-50/10 transition-colors">
-            View Communities
-          </button>
+          <p className="text-lg text-stone-100 mb-8 font-light leading-relaxed">
+            Discover thoughtfully designed, masterfully constructed homes in the most sought-after neighborhoods.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button className="w-full bg-stone-50 text-stone-900 px-6 py-3.5 rounded-full text-sm font-medium hover:bg-stone-200 transition-colors flex items-center justify-center gap-2">
+              Explore Homes <ArrowRight className="w-4 h-4" />
+            </button>
+            <button className="w-full bg-stone-50/10 backdrop-blur-sm border border-stone-50/50 text-stone-50 px-6 py-3.5 rounded-full text-sm font-medium hover:bg-stone-50/20 transition-colors">
+              Communities
+            </button>
+          </div>
         </motion.div>
       </div>
     </section>
