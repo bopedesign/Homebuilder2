@@ -1,0 +1,47 @@
+import { Resend } from 'resend';
+
+export default async function handler(req: any, res: any) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const { firstName, lastName, email, phone, community, timeframe, notes } = req.body;
+
+    if (!process.env.RESEND_API_KEY) {
+      return res.status(500).json({ error: "RESEND_API_KEY is not configured." });
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const { data, error } = await resend.emails.send({
+      from: "Oak & Iron Homes <onboarding@resend.dev>",
+      to: email, // Sending to the user who filled the form
+      subject: "Your Tour Request at Oak & Iron Homes",
+      html: `
+        <h2>Thank you for your interest, ${firstName}!</h2>
+        <p>We have received your request to schedule a tour.</p>
+        <h3>Details:</h3>
+        <ul>
+          <li><strong>Name:</strong> ${firstName} ${lastName}</li>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>Phone:</strong> ${phone}</li>
+          <li><strong>Community of Interest:</strong> ${community}</li>
+          <li><strong>Preferred Timeframe:</strong> ${timeframe}</li>
+          <li><strong>Notes:</strong> ${notes || "None"}</li>
+        </ul>
+        <p>One of our community specialists will be in touch shortly to confirm your appointment.</p>
+      `,
+    });
+
+    if (error) {
+      console.error("Resend error:", error);
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.status(200).json({ success: true, data });
+  } catch (err: any) {
+    console.error("Server error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

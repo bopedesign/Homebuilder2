@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Star, MapPin, CheckCircle, Menu, X, Instagram, Facebook, Twitter, ChevronRight, Home, Users, Bed, Bath, Maximize } from 'lucide-react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useParams } from 'react-router-dom';
