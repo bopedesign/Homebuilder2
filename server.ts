@@ -3,6 +3,19 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { Resend } from "resend";
+import fs from "fs";
+
+const logStream = fs.createWriteStream(path.join(process.cwd(), 'server.log'), { flags: 'a' });
+const originalConsoleLog = console.log;
+const originalConsoleError = console.error;
+console.log = (...args) => {
+  logStream.write(`[LOG] ${args.join(' ')}\n`);
+  originalConsoleLog(...args);
+};
+console.error = (...args) => {
+  logStream.write(`[ERR] ${args.join(' ')}\n`);
+  originalConsoleError(...args);
+};
 
 async function startServer() {
   const app = express();
@@ -10,6 +23,12 @@ async function startServer() {
 
   // Middleware to parse JSON bodies
   app.use(express.json());
+
+  // Log all requests
+  app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+  });
 
   // API routes FIRST
   app.get("/api/health", (req, res) => {
